@@ -259,8 +259,9 @@ public class ClosestPairArrayListVSLinkedList {
     */ 
     {
         //Calculate the distance between each pair of nodes in the array to find the minimun distance and the two closest nodes.
-        for (int j = 0; j < listaN.size(listaN)-1; j++) {
-            for (int k = j+1; k < listaN.size(listaN); k++) {
+        int size = listaN.size(listaN);
+        for (int j = 0; j < size-1; j++) {
+            for (int k = j+1; k < size; k++) {
                 iteraciones ++; //Update the iterations counter.
                 LinkedNode nodeA = listaN.get(listaN, j);
                 LinkedNode nodeB = listaN.get(listaN, k);
@@ -367,14 +368,15 @@ public class ClosestPairArrayListVSLinkedList {
     */
     {
         LinkedList Middle = new LinkedList();
-        double middle = (listaN.get(listaN, listaN.size(listaN)/2-1).x + listaN.get(listaN, listaN.size(listaN)/2).x)/2;
+        int size = listaN.size(listaN);
+        double middle = (listaN.get(listaN, size/2-1).x + listaN.get(listaN, size/2).x)/2;
         double firstMiddle = middle - Math.sqrt(minDist);
         double secondMiddle = middle + Math.sqrt(minDist);
         
         //Creates the middle array depending on the range determinated by firstMiddle and secondMiddle.
-        for (int j = 0; j < listaN.size(listaN); j++) {
-            if(listaN.get(listaN, j).x > firstMiddle && listaN.get(listaN, j).x < secondMiddle){
-                LinkedNode readed = listaN.get(listaN, j);
+        for (int j = 0; j < size; j++) {
+            LinkedNode readed = listaN.get(listaN, j);
+            if(readed.x > firstMiddle && readed.x < secondMiddle){
                 LinkedNode newNode = new LinkedNode(readed.x,readed.y);
                 Middle.insertNode(Middle, newNode);
             }
