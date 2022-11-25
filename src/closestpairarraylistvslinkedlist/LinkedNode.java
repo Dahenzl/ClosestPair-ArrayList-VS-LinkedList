@@ -6,8 +6,8 @@ package closestpairarraylistvslinkedlist;
  * @author ddhenriquez
  */
 public final class LinkedNode {
-    final int x;
-    final int y;
+    int x;
+    int y;
     LinkedNode next;
     
     public LinkedNode(int x, int y){
