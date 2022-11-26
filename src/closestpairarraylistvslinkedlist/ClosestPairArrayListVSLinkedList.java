@@ -13,14 +13,18 @@ import java.util.Random;
  * NRC: 3265
  * Name: David Daniel Henriquez Leal
  * Student code: 200157506
- * Date: 16/11/2022
+ * Date: 25/11/2022
  * 
- * WorkShop: Closest Pair
- * In this workshop I created a proyect that is able to find the closest pair of nodes in two diferent ways, using the brute force and by divide and conquer.
- * To them write the number of iterations and the time it took to both method to complete the same task, so them we can compare it and make an analysis and comparisons between both methods.
+ * WorkShop: Closest Pair - Array List VS Linked List
+ * In this workshop I created a proyect that is able to find the closest pair of nodes using two different algorithm design techniques, Brute Force and Divide and Conquer, in two different lists, Array Lists and Linked Lists.
+ * To them write the number of iterations and the time it took to the four methods to complete the same task, so them we can compare it and make an analysis and comparisons between the four methods.
  *
  * References:
  * https://www.geeksforgeeks.org/arrays-sort-in-java-with-examples/
+ * https://www.geeksforgeeks.org/implementing-a-linked-list-in-java-using-class/#:~:text=Like%20arrays%2C%20Linked%20List%20is,Node%20as%20a%20separate%20class.
+ * https://www.geeksforgeeks.org/what-is-linked-list/
+ * https://www.geeksforgeeks.org/introduction-to-divide-and-conquer-algorithm-data-structure-and-algorithm-tutorials/
+ * https://www.geeksforgeeks.org/how-to-sort-a-linkedlist-in-java/
  */
 
 public class ClosestPairArrayListVSLinkedList {
@@ -39,51 +43,49 @@ public class ClosestPairArrayListVSLinkedList {
         PrintWriter outDivideLinked = new PrintWriter ("resultsDivideLinked.txt");
         PrintWriter outBruteLinked = new PrintWriter ("resultsBruteLinked.txt");
         
-        int N = 2; //Set the size of the array of nodes.
+        int N = 2; //Set the size of the list of nodes.
         int x = 4; //Set the limit of the random function in x.
         int y = 8; //Set the limit of the random function in y.
         
-        create("resultsBruteArray.txt"); //Creates the file with the results from the brute method using Array lists.
-        create("resultsDivideArray.txt"); //Creates the file with the results from the divide and conquer method using Array lists.
-        create("resultsBruteLinked.txt"); //Creates the file with the results from the brute method using Linked lists.
-        create("resultsDivideLinked.txt"); //Creates the file with the results from the divide and conquer method using Linked lists.
+        create("resultsBruteArray.txt"); //Creates the file with the results from the brute method using Array Lists.
+        create("resultsDivideArray.txt"); //Creates the file with the results from the divide and conquer method using Array Lists.
+        create("resultsBruteLinked.txt"); //Creates the file with the results from the brute method using Linked Lists.
+        create("resultsDivideLinked.txt"); //Creates the file with the results from the divide and conquer method using Linked Lists.
          
         for (int i = 0; i < 12; i++) {
             iteraciones = 0; //Resets the iterations counter.
             //Perform 6 tests with the same N to then calculate the average of the times and the iterations.
             for (int j = 0; j < 6; j++) {
                 minDist = Double.POSITIVE_INFINITY; //Resets the minimun distance.
-                Nodos = createNodesArray(N, x, y); //Create the array of nodes.
+                Nodos = createNodesArray(N, x, y); //Create the Array List of nodes.
                 inicio = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
-                parCercanoRecursivoArray(Nodos); //Start of the recursive process.
+                parCercanoRecursivoArray(Nodos); //Start of the recursive process using Array Lists.
                 fin = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
                 DivideTimes[j] = fin - inicio; //Save the ejecution times in an array.
             }
-            writeResults(N, iteraciones/6, Average(DivideTimes), outDivideArray); //Writes on the divide and conquer results file.
+            writeResults(N, iteraciones/6, Average(DivideTimes), outDivideArray); //Writes on the divide and conquer using Array Lists results file.
             printAndBruteArray(Nodos); //Print in console the results of the program.
-            writeResults(N, iteraciones, fin - inicio, outBruteArray); //Writes on the brute force results file.
-            N = N * 2; //Duplicate the size of the array of nodes.
+            writeResults(N, iteraciones, fin - inicio, outBruteArray); //Writes on the brute force using Array Lists results file.
+            N = N * 2; //Duplicate the size of the Array List of nodes.
             x = x * 2; //Duplicate the random limit of x.
         }
         
-        System.out.println("Linked");
-        N = 2; //Reset the size of the array of nodes.
+        N = 2; //Reset the size of the list of nodes.
         x = 4; //Reset the limit of the random function in x.
         y = 8; //Reset the limit of the random function in y.
         
         for (int i = 0; i < 12; i++) {
-            System.out.println(i);
-            iteraciones = 0;
-            minDist = Double.POSITIVE_INFINITY;
-            listaNodos = createNodesLinked(N, x, y);
-            inicio = System.nanoTime();
-            parCercanoRecursivoLinked(listaNodos);
-            fin = System.nanoTime();
-            writeResults(N, iteraciones, fin - inicio, outDivideLinked);
-            printAndBruteLinked(listaNodos);
-            writeResults(N, iteraciones, fin - inicio, outBruteLinked);
-            N = N * 2;
-            x = x * 2;
+            iteraciones = 0; //Resets the iterations counter.
+            minDist = Double.POSITIVE_INFINITY; //Resets the minimun distance.
+            listaNodos = createNodesLinked(N, x, y); //Create the Linked List of nodes.
+            inicio = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
+            parCercanoRecursivoLinked(listaNodos); //Start of the recursive process using Linked List.
+            fin = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
+            writeResults(N, iteraciones, fin - inicio, outDivideLinked); //Writes on the divide and conquer using Linked Lists results file.
+            printAndBruteLinked(listaNodos); //Print in console the results of the program.
+            writeResults(N, iteraciones, fin - inicio, outBruteLinked);  //Writes on the brute force using Linked Lists results file.
+            N = N * 2; //Duplicate the size of the Linked List of nodes.
+            x = x * 2; //Duplicate the random limit of x.
         }
            
         outDivideArray.close();
@@ -128,56 +130,56 @@ public class ClosestPairArrayListVSLinkedList {
     
     public static void parCercanoRecursivoArray(ArrayList<Node> listaN)
     /*
-    Recursive function that finds the closest pair of nodes in an array list by using the divide and conquer method.
+    Recursive function that finds the closest pair of nodes in an Array List by using the divide and conquer method.
     Input:
-    listaN - The array from which we want to find the closest pair.
+    listaN - The Array List from which we want to find the closest pair.
     Outputs:
-    minDist - The minimun distance between two nodes of the array finded by using divide and conquer method.
-    FirstNode - The first node of the closest pair in the array finded by using divide and conquer method.
-    SecondNode - The second node of the closest pair in the array finded by using divide and conquer method.
+    minDist - The minimun distance between two nodes of the Array List finded by using divide and conquer method.
+    FirstNode - The first node of the closest pair in the Array List finded by using divide and conquer method.
+    SecondNode - The second node of the closest pair in the Array List finded by using divide and conquer method.
     */
     {
         if (listaN.size() <= 3){
             bruteArray(listaN); //Find the minimum distance of the subdivision of the list to analyze when it's size is equal or less than 3.
         }else{
-            parCercanoRecursivoArray(divideArray(listaN, 0)); //Call the recursive function with the first half of the array.
-            parCercanoRecursivoArray(divideArray(listaN, 1)); //Call the recursive function with the second half of the array.
+            parCercanoRecursivoArray(divideArray(listaN, 0)); //Call the recursive function with the first half of the Array List.
+            parCercanoRecursivoArray(divideArray(listaN, 1)); //Call the recursive function with the second half of the Array List.
             middleArray(listaN); //Create the middle of the array and find its minium distance.
         }   
     }
     
     public static void parCercanoRecursivoLinked(LinkedList listaN)
     /*
-    Recursive function that finds the closest pair of nodes in a linked list by using the divide and conquer method.
+    Recursive function that finds the closest pair of nodes in a Linked List by using the divide and conquer method.
     Input:
-    listaN - The array from which we want to find the closest pair.
+    listaN - The Linked List from which we want to find the closest pair.
     Outputs:
-    minDist - The minimun distance between two nodes of the array finded by using divide and conquer method.
-    FirstNode - The first node of the closest pair in the array finded by using divide and conquer method.
-    SecondNode - The second node of the closest pair in the array finded by using divide and conquer method.
+    minDist - The minimun distance between two nodes of the Linked List finded by using divide and conquer method.
+    FirstNode - The first node of the closest pair in the Linked List finded by using divide and conquer method.
+    SecondNode - The second node of the closest pair in the Linked List finded by using divide and conquer method.
     */
     {
         if (listaN.size(listaN) <= 3){
             bruteLinked(listaN); //Find the minimum distance of the subdivision of the list to analyze when it's size is equal or less than 3.
         }else{
-            parCercanoRecursivoLinked(divideLinked(listaN, 0)); //Call the recursive function with the first half of the array.
-            parCercanoRecursivoLinked(divideLinked(listaN, 1)); //Call the recursive function with the second half of the array.
+            parCercanoRecursivoLinked(divideLinked(listaN, 0)); //Call the recursive function with the first half of the Linked List.
+            parCercanoRecursivoLinked(divideLinked(listaN, 1)); //Call the recursive function with the second half of the Linked List.
             middleLinked(listaN); //Create the middle of the array and find its minium distance.
         }   
     }
     
     public static ArrayList<Node> createNodesArray(int N, int ranX, int ranY)
     /*
-    Function that create the array of nodes using an array list.
+    Function that create the list of nodes using an Array List.
     Inputs: 
-    N - The size of the array.
+    N - The size of the Array List.
     ranX - The limit of the random function in x.
     ranY - The limit of the random function in y.
     Output:
-    Nodes - Principal array of nodes.
+    Nodes - Principal Array List of nodes.
     */
     {
-        //Create the array of nodes.
+        //Create the Array List of nodes.
         ArrayList<Node> Nodes = new ArrayList<Node>();
         for (int i = 0; i < N; i++) {
             int x = ran.nextInt(ranX);
@@ -186,23 +188,23 @@ public class ClosestPairArrayListVSLinkedList {
             Nodes.add(n);
         }
         
-        Collections.sort(Nodes, new SortByXandY()); //Calls a function that sorts the array.
+        Collections.sort(Nodes, new SortByXandY()); //Calls a function that sorts the Array List.
 
         return Nodes; 
     }
     
     public static LinkedList createNodesLinked(int N, int ranX, int ranY)
     /*
-    Function that create the array of nodes using a linked list.
+    Function that create the list of nodes using a Linked List.
     Inputs: 
-    N - The size of the array.
+    N - The size of the Linked List.
     ranX - The limit of the random function in x.
     ranY - The limit of the random function in y.
     Output:
-    Nodes - Principal array of nodes.
+    Nodes - Principal Linked List of nodes.
     */
     {
-        //Create the array of nodes.
+        //Create the Linked List of nodes.
         LinkedList list = new LinkedList();
         for (int i = 0; i < N; i++) {
             int x = ran.nextInt(ranX);
@@ -211,23 +213,23 @@ public class ClosestPairArrayListVSLinkedList {
             list.insertNode(list, n);
         }
         
-        list.sortList(list);
+        list.sortList(list); //Calls a function that sorts the Linked List
 
         return list; 
     }
        
     public static void bruteArray(ArrayList<Node> listaN)
     /*
-    Function that finds the minimun distance between two nodes of an array list.
+    Function that finds the minimun distance between two nodes of an Array List.
     Inputs:
-    listaN - The array from which we want to find the minimum distance.
+    listaN - The Array List from which we want to find the minimum distance.
     Outputs:
     dist - The minimun distance between two nodes of the array.
-    nodeA - The first node of the closest pair in the array.
-    nodeB - The second node of the closest pair in the array.
+    nodeA - The first node of the closest pair in the Array List.
+    nodeB - The second node of the closest pair in the Array List.
     */ 
     {
-        //Calculate the distance between each pair of nodes in the array to find the minimun distance and the two closest nodes.
+        //Calculate the distance between each pair of nodes in the Array List to find the minimun distance and the two closest nodes.
         for (int j = 0; j < listaN.size()-1; j++) {
             for (int k = j+1; k < listaN.size(); k++) {
                 iteraciones ++; //Update the iterations counter.
@@ -249,16 +251,16 @@ public class ClosestPairArrayListVSLinkedList {
     
     public static void bruteLinked(LinkedList listaN)
     /*
-    Function that finds the minimun distance between two nodes of an linked list.
+    Function that finds the minimun distance between two nodes of a Linked List.
     Inputs:
-    listaN - The array from which we want to find the minimum distance.
+    listaN - The Linked List from which we want to find the minimum distance.
     Outputs:
     dist - The minimun distance between two nodes of the array.
-    nodeA - The first node of the closest pair in the array.
-    nodeB - The second node of the closest pair in the array.
+    nodeA - The first node of the closest pair in the Linked List.
+    nodeB - The second node of the closest pair in the Linked List.
     */ 
     {
-        //Calculate the distance between each pair of nodes in the array to find the minimun distance and the two closest nodes.
+        //Calculate the distance between each pair of nodes in the Linked List to find the minimun distance and the two closest nodes.
         int size = listaN.size(listaN);
         for (int j = 0; j < size-1; j++) {
             for (int k = j+1; k < size; k++) {
@@ -281,17 +283,17 @@ public class ClosestPairArrayListVSLinkedList {
     
     public static ArrayList<Node> divideArray(ArrayList<Node> list, int Half)
     /*
-    Function that divides an array list of nodes in two halfs.
+    Function that divides an Array List of nodes in two halfs.
     Inputs:
-    list - The array we want to divide.
-    Half - An integer that determine if the output is going to be the first half or the second half of the array.
+    list - The Array list we want to divide.
+    Half - An integer that determine if the output is going to be the first half or the second half of the Array List.
     Outputs:
-    halfList - A half of the original array, the first half if Half is 0 and the second half if Half is 1.
+    halfList - A half of the original Array List, the first half if Half is 0 and the second half if Half is 1.
     */
     {
         ArrayList<Node> halfList = new ArrayList<Node>();
         
-        //Determine wich half of the array is going to return the function depending on the int Half.
+        //Determine wich half of the Array List is going to return the function depending on the int Half.
         if (Half == 0){
             for (int i = 0; i < list.size()/2; i++) {
                 halfList.add(list.get(i));
@@ -308,15 +310,15 @@ public class ClosestPairArrayListVSLinkedList {
     /*
     Function that divides a Linked list of nodes in two halfs.
     Inputs:
-    list - The array we want to divide.
-    Half - An integer that determine if the output is going to be the first half or the second half of the array.
+    list - The Linked list we want to divide.
+    Half - An integer that determine if the output is going to be the first half or the second half of the Linked List.
     Outputs:
-    halfList - A half of the original array, the first half if Half is 0 and the second half if Half is 1.
+    halfList - A half of the original Linked List, the first half if Half is 0 and the second half if Half is 1.
     */
     {
         LinkedList halfList = new LinkedList();
         int size = list.size(list);
-        //Determine wich half of the array is going to return the function depending on the int Half.
+        //Determine wich half of the Linked List is going to return the function depending on the int Half.
         if (Half == 0){
             for (int i = 0; i < size/2; i++) {
                 LinkedNode readed = list.get(list, i);
@@ -336,11 +338,11 @@ public class ClosestPairArrayListVSLinkedList {
     
     public static void middleArray(ArrayList<Node> listaN)
     /*
-    Function that create the middle array list of the given array.
+    Function that create the Middle Array List of the given Array List.
     Inputs:
-    listaN - The array from which we want to create the middle.
+    listaN - The Array List from which we want to create the middle.
     Outputs:
-    Middle - The middle of the given array depending on the minimun distance.
+    Middle - The middle of the given Array List depending on the minimun distance.
     */
     {
         ArrayList<Node> Middle = new ArrayList<Node>();
@@ -348,23 +350,23 @@ public class ClosestPairArrayListVSLinkedList {
         double firstMiddle = middle - Math.sqrt(minDist);
         double secondMiddle = middle + Math.sqrt(minDist);
         
-        //Creates the middle array depending on the range determinated by firstMiddle and secondMiddle.
+        //Creates the Middle Array List depending on the range determinated by firstMiddle and secondMiddle.
         for (int j = 0; j < listaN.size(); j++) {
             if(listaN.get(j).x > firstMiddle && listaN.get(j).x < secondMiddle){
                 Middle.add(listaN.get(j));
             }
         }
 
-        bruteArray(Middle); //Perform the brute function with the middle array.
+        bruteArray(Middle); //Perform the brute function with the Middle Array List.
     }    
     
     public static void middleLinked(LinkedList listaN)
     /*
-    Function that create the middle linked list of the given array.
+    Function that create the Middle Linked List of the given Linked list.
     Inputs:
-    listaN - The array from which we want to create the middle.
+    listaN - The Linked List from which we want to create the middle.
     Outputs:
-    Middle - The middle of the given array depending on the minimun distance.
+    Middle - The middle of the given Linked List depending on the minimun distance.
     */
     {
         LinkedList Middle = new LinkedList();
@@ -373,7 +375,7 @@ public class ClosestPairArrayListVSLinkedList {
         double firstMiddle = middle - Math.sqrt(minDist);
         double secondMiddle = middle + Math.sqrt(minDist);
         
-        //Creates the middle array depending on the range determinated by firstMiddle and secondMiddle.
+        //Creates the Middle Linked List depending on the range determinated by firstMiddle and secondMiddle.
         for (int j = 0; j < size; j++) {
             LinkedNode readed = listaN.get(listaN, j);
             if(readed.x > firstMiddle && readed.x < secondMiddle){
@@ -382,47 +384,47 @@ public class ClosestPairArrayListVSLinkedList {
             }
         }
 
-        bruteLinked(Middle); //Perform the brute function with the middle array.
+        bruteLinked(Middle); //Perform the brute function with the Middle Linked List.
     }  
     
     public static void printAndBruteArray(ArrayList<Node> listaN)
     /*
-    Function that prints the results of the recursive function, performs the brute force method, and prints its results for comparison, all of this using an array list.
+    Function that prints the results of the recursive function, performs the brute force method, and prints its results for comparison, all of this using an Array List.
     Inputs:
-    listaN - The array from which we want to print the collected data and perform the brute function.
+    listaN - The Array List from which we want to print the collected data and perform the brute function.
     Outputs:
-    minDist - The minimun distance between two nodes of the array finded by using the brute force method.
-    FirstNode - The first node of the closest pair in the array finded by using the brute force method.
-    SecondNode - The second node of the closest pair in the array finded by using the brute force method.
-    Prints in console the minimun distance and the closest pair of nodes of the array, showing first the results of the recursive function and them
+    minDist - The minimun distance between two nodes of the Array List finded by using the brute force method.
+    FirstNode - The first node of the closest pair in the Array List finded by using the brute force method.
+    SecondNode - The second node of the closest pair in the Array List finded by using the brute force method.
+    Prints in console the minimun distance and the closest pair of nodes of the Array List, showing first the results of the recursive function and them
     the results of putting thw whole array in the brute function.
     */
     {        
-        //Prints the results of the recursive function.
+        //Prints the results of the recursive function using Array Lists.
         System.out.println("\n" + "Resultados divide and conquer; ");
         System.out.println("Distancia: " + Math.sqrt(minDist) + " - Primer nodo: (" + FirstNode.x + "," + FirstNode.y + ") - Segundo nodo: (" + SecondNode.x + "," + SecondNode.y + ")");
         
         minDist = Double.POSITIVE_INFINITY; //Resets the minimun distance.
         iteraciones  = 0; //Resets the iterations counter.
         inicio = System.nanoTime(); //Takes the exact time in wich the brute force method started.
-        bruteArray(listaN); //Performs the brute function to the whole array.
+        bruteArray(listaN); //Performs the brute function to the whole Array List.
         fin = System.nanoTime(); //Takes the exact time in wich the brute force method started.
 
-        //Prints the results of putting the whole array in the brute force method.
+        //Prints the results of putting the whole Array List in the brute force method.
         System.out.println("Resultados brute; ");
         System.out.println("Distancia: " + Math.sqrt(minDist) + " - Primer nodo: (" + FirstNode.x + "," + FirstNode.y + ") - Segundo nodo: (" + SecondNode.x + "," + SecondNode.y + ")");
     }  
     
     public static void printAndBruteLinked(LinkedList listaN)
     /*
-    Function that prints the results of the recursive function, performs the brute force method, and prints its results for comparison, all of this using a linked list.
+    Function that prints the results of the recursive function, performs the brute force method, and prints its results for comparison, all of this using a Linked List.
     Inputs:
-    listaN - The array from which we want to print the collected data and perform the brute function.
+    listaN - The Linked List from which we want to print the collected data and perform the brute function.
     Outputs:
-    minDist - The minimun distance between two nodes of the array finded by using the brute force method.
-    FirstNode - The first node of the closest pair in the array finded by using the brute force method.
-    SecondNode - The second node of the closest pair in the array finded by using the brute force method.
-    Prints in console the minimun distance and the closest pair of nodes of the array, showing first the results of the recursive function and them
+    minDist - The minimun distance between two nodes of the Linked List finded by using the brute force method.
+    FirstNode - The first node of the closest pair in the Linked List finded by using the brute force method.
+    SecondNode - The second node of the closest pair in the Linked List finded by using the brute force method.
+    Prints in console the minimun distance and the closest pair of nodes of the Linked List, showing first the results of the recursive function and them
     the results of putting thw whole array in the brute function.
     */
     {        
@@ -433,10 +435,10 @@ public class ClosestPairArrayListVSLinkedList {
         minDist = Double.POSITIVE_INFINITY; //Resets the minimun distance.
         iteraciones  = 0; //Resets the iterations counter.
         inicio = System.nanoTime(); //Takes the exact time in wich the brute force method started.
-        bruteLinked(listaN); //Performs the brute function to the whole array.
+        bruteLinked(listaN); //Performs the brute function to the Linked List.
         fin = System.nanoTime(); //Takes the exact time in wich the brute force method started.
 
-        //Prints the results of putting the whole array in the brute force method.
+        //Prints the results of putting the whole Linked List in the brute force method.
         System.out.println("Resultados brute; ");
         System.out.println("Distancia: " + Math.sqrt(minDist) + " - Primer nodo: (" + FirstNode.x + "," + FirstNode.y + ") - Segundo nodo: (" + SecondNode.x + "," + SecondNode.y + ")");
     }  
