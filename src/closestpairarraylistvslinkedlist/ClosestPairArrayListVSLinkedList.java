@@ -35,7 +35,8 @@ public class ClosestPairArrayListVSLinkedList {
     private static long iteraciones, inicio, fin;
 
     public static void main(String[] args) throws FileNotFoundException {
-        long DivideTimes[] = new long[6];
+        long DivideArrayTimes[] = new long[6];
+        long DivideLinkedTimes[] = new long[6];
         ArrayList<Node> Nodos = new ArrayList<Node>();
         LinkedList listaNodos = new LinkedList();
         PrintWriter outDivideArray = new PrintWriter ("resultsDivideArray.txt");
@@ -43,8 +44,8 @@ public class ClosestPairArrayListVSLinkedList {
         PrintWriter outDivideLinked = new PrintWriter ("resultsDivideLinked.txt");
         PrintWriter outBruteLinked = new PrintWriter ("resultsBruteLinked.txt");
         
-        int N = 2; //Set the size of the list of nodes.
-        int x = 4; //Set the limit of the random function in x.
+        int N = 4; //Set the size of the list of nodes.
+        int x = 8; //Set the limit of the random function in x.
         int y = 8; //Set the limit of the random function in y.
         
         create("resultsBruteArray.txt"); //Creates the file with the results from the brute method using Array Lists.
@@ -61,27 +62,30 @@ public class ClosestPairArrayListVSLinkedList {
                 inicio = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
                 parCercanoRecursivoArray(Nodos); //Start of the recursive process using Array Lists.
                 fin = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
-                DivideTimes[j] = fin - inicio; //Save the ejecution times in an array.
+                DivideArrayTimes[j] = fin - inicio; //Save the ejecution times in an array.
             }
-            writeResults(N, iteraciones/6, Average(DivideTimes), outDivideArray); //Writes on the divide and conquer using Array Lists results file.
+            writeResults(N, iteraciones/6, Average(DivideArrayTimes), outDivideArray); //Writes on the divide and conquer using Array Lists results file.
             printAndBruteArray(Nodos); //Print in console the results of the program.
             writeResults(N, iteraciones, fin - inicio, outBruteArray); //Writes on the brute force using Array Lists results file.
             N = N * 2; //Duplicate the size of the Array List of nodes.
             x = x * 2; //Duplicate the random limit of x.
         }
         
-        N = 2; //Reset the size of the list of nodes.
-        x = 4; //Reset the limit of the random function in x.
+        N = 4; //Reset the size of the list of nodes.
+        x = 8; //Reset the limit of the random function in x.
         y = 8; //Reset the limit of the random function in y.
         
         for (int i = 0; i < 12; i++) {
             iteraciones = 0; //Resets the iterations counter.
             minDist = Double.POSITIVE_INFINITY; //Resets the minimun distance.
-            listaNodos = createNodesLinked(N, x, y); //Create the Linked List of nodes.
-            inicio = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
-            parCercanoRecursivoLinked(listaNodos); //Start of the recursive process using Linked List.
-            fin = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
-            writeResults(N, iteraciones, fin - inicio, outDivideLinked); //Writes on the divide and conquer using Linked Lists results file.
+            for (int j = 0; j < 6; j++) {
+                listaNodos = createNodesLinked(N, x, y); //Create the Linked List of nodes.
+                inicio = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
+                parCercanoRecursivoLinked(listaNodos); //Start of the recursive process using Linked List.
+                fin = System.nanoTime(); //Takes the exact time in wich the divide and conquer method started.
+                DivideLinkedTimes[j] = fin - inicio; //Save the ejecution times in an array.
+            }
+            writeResults(N, iteraciones/6, Average(DivideLinkedTimes), outDivideLinked); //Writes on the divide and conquer using Linked Lists results file.
             printAndBruteLinked(listaNodos); //Print in console the results of the program.
             writeResults(N, iteraciones, fin - inicio, outBruteLinked);  //Writes on the brute force using Linked Lists results file.
             N = N * 2; //Duplicate the size of the Linked List of nodes.
